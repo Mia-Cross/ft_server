@@ -22,4 +22,4 @@ RUN rm -f /etc/nginx/sites-available/default \
 CMD bash /home/launch_script.sh && bash
 
 # faire le lien entre les ports de l'ordi et le reseau
-EXPOSE 80
+EXPOSE 80 443

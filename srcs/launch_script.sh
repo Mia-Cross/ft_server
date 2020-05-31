@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "SCRIPT START"
-
 # demarrer les services dont on aura besoin
 service nginx start
 service php7.3-fpm start
@@ -21,9 +19,3 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 # redemarrer les services sur lesquels on a fait des modifs de config
 service nginx restart
 service mysql restart
-
-echo "SCRIPT END"
-
-#while [ TRUE ]; do
-#	echo
-#done
