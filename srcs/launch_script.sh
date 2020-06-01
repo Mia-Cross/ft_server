@@ -6,8 +6,8 @@ chown -R www-data: /var/www/localhost/wordpress
 
 # telecharger la derniere version de phpmyadmin
 wget -c https://files.phpmyadmin.net/phpMyAdmin/4.9.2/phpMyAdmin-4.9.2-english.tar.gz -O - | tar -xz -C /var/www/localhost
-mv var/www/localhost/phpMyAdmin-4.9.2-english var/www/localhost/phpmyadmin
-chown -R www-data: /var/www/localhost/phpmyadmin
+mv var/www/localhost/phpMyAdmin-4.9.2-english var/www/localhost/phpMyAdmin
+chown -R www-data: /var/www/localhost/phpMyAdmin
 
 # creer la cle et le certificat SSL
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
