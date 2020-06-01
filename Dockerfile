@@ -2,24 +2,27 @@ FROM debian:buster
 
 LABEL maintainer="Leila Marabese lemarabe@student.42.fr"
 
-# installer nginx, php, mysql
-RUN apt-get update && apt-get upgrade \
+# mise a jour des packages et installation de nginx, ssl, mysql et php 
+RUN apt-get update && apt-get upgrade\
+	&& apt-get install -y wget \
     && apt-get install -y nginx \
     && apt-get install -y openssl \
     && apt-get install -y mariadb-server \
     && apt-get install -y php7.3 php7.3-fpm php7.3-mysql
 
-#copie des sources (wordpress et phpmyadmin) dans le container
-COPY srcs /var/www/html/
+RUN mkdir /var/www/localhost && chown -R $USER:$USER /var/www/localhost
 
-#configurer nginx a partir des sources importees
-RUN rm -f /etc/nginx/sites-available/default \
-    && mv /var/www/html/my_nginx_config /etc/nginx/sites-available/default \
-    && mv /var/www/html/launch_script.sh /home/ \
-    && chmod 755 /home/launch_script.sh
+#copie des sources dans le container
+COPY srcs /my_files
+
+#configuration de nginx a partir des sources importees
+RUN rm -f /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default \
+    && mv /my_files/my_nginx_config /etc/nginx/sites-available/ \
+	&& ln -s /etc/nginx/sites-available/my_nginx_config /etc/nginx/sites-enabled/ \
+	&& chmod 755 /my_files/launch_script.sh
 
 #executer le script de demarrage
-CMD bash /home/launch_script.sh && bash
+CMD bash /my_files/launch_script.sh && bash
 
 # faire le lien entre les ports de l'ordi et le reseau
 EXPOSE 80 443
